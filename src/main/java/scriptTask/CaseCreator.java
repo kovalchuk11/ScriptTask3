@@ -71,8 +71,7 @@ public class CaseCreator {
 
             testCaseList.add(testCase);
         }
-//        System.out.println(new CaseResolver().resolveCase(testCaseList.get(2)));
-//        ;
+
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i< testCaseList.size(); i++){
             stringBuilder.append("Case #").append(i+1).append(": ")

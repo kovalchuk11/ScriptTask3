@@ -10,6 +10,7 @@ public class CaseResolver {
     private StringBuilder stringBuilder = new StringBuilder();
     List<Integer> boxesQueue = new ArrayList<>();
 
+
     public String resolveCase(TestCase testCase) {
         int maxLop = testCase.getBoxesCount() * testCase.getBoxesCount();
 
@@ -17,10 +18,11 @@ public class CaseResolver {
         List<Box> boxes = new ArrayList(testCase.getBoxesList());
         boolean isResolved = false;
 
-        int i = 0;
+
+        int index = 0;
         int loopCount = 0;
         while (!isResolved) {
-            Box box = boxes.get(i);
+            Box box = boxes.get(index);
             if (box.isClosed()) {
                 Integer boxKeyType = box.getBoxType();
 
@@ -28,38 +30,38 @@ public class CaseResolver {
 
                     if (!isLastKey(keys, boxKeyType)) {
 
-                        i = updateData(keys, boxes, boxKeyType, i);
+                        index = updateData(keys, boxes, boxKeyType, index);
 
                     } else if (box.getBoxKeys().contains(boxKeyType)) {
 
-                        i = updateData(keys, boxes, boxKeyType, i);
+                        index = updateData(keys, boxes, boxKeyType, index);
 
                     } else if (isLastBoxType(boxes, boxKeyType)) {
-                        i = updateData(keys, boxes, boxKeyType, i);
+                        index = updateData(keys, boxes, boxKeyType, index);
 
                     } else if (isClosedBoxesContainsKeySameType(boxes, keys, boxKeyType)) {
 
-                        if (keys.size() > 1 /*|| box.getBoxKeys().contains(boxKeyType)*/) {
-                            i = updateData(keys, boxes, boxKeyType, i);
+                        if (keys.size() > 1) {
+                            index = updateData(keys, boxes, boxKeyType, index);
 
                         } else {
-                            i++;
+                            index++;
                         }
                     }
 
                 } else {
-                    if (i < boxes.size() - 1) {
-                        i++;
+                    if (index < boxes.size() - 1) {
+                        index++;
                     } else {
-                        i = 0;
+                        index = 0;
                     }
                 }
 
             } else {
-                if (i < boxes.size() - 1) {
-                    i++;
+                if (index < boxes.size() - 1) {
+                    index++;
                 } else {
-                    i = 0;
+                    index = 0;
                 }
             }
 
@@ -99,7 +101,7 @@ public class CaseResolver {
         return false;
     }
 
-    public boolean isClosedBoxesContainsKeySameType(List<Box> boxes, List<Integer> keys, int boxTypeKey) {
+    private boolean isClosedBoxesContainsKeySameType(List<Box> boxes, List<Integer> keys, int boxTypeKey) {
 
         for (int key : keys) {
             for (int i = 0; i < boxes.size(); i++) {
@@ -115,7 +117,7 @@ public class CaseResolver {
         return false;
     }
 
-    public boolean isLastBoxType(List<Box> boxes, int key) {
+    private boolean isLastBoxType(List<Box> boxes, int key) {
         int boxTypeCount = 0;
         for (Box box : boxes) {
 
@@ -126,7 +128,7 @@ public class CaseResolver {
         return boxTypeCount <= 1;
     }
 
-    public boolean isLastKey(List<Integer> keys, int key) {
+    private boolean isLastKey(List<Integer> keys, int key) {
         int keysCount = 0;
         for (int keyInList : keys) {
             if (keyInList == key) {
@@ -136,8 +138,4 @@ public class CaseResolver {
         return keysCount <= 1;
     }
 
-//    public boolean isBoxContainsThatKey(Box box, int key) {
-//        return box.getBoxKeys().contains(key);
-//
-//    }
 }
